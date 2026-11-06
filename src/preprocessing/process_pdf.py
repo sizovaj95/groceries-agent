@@ -14,7 +14,7 @@ import constants as co
 
 load_dotenv()
 FOUNDRY_KEY = os.environ.get("AZURE_FOUNDRY_KEY")
-AZURE_DOC_INTEL_URL = co.AZURE_DOC_INTELLIGENCE_ENDPOINT
+AZURE_DOC_INTEL_URL = co.AZURE_FOUNDRY_ENDPOINT
 RECEIPTS_FOLDER = co.GOOGLE_DRIVE_PATH / "receipts"
 SAVE_FOLDER = Path(__file__).parent / "ocr_results"
 document_intelligence_client = DocumentIntelligenceClient(

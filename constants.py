@@ -3,7 +3,7 @@ from datetime import date
 
 from pydantic import BaseModel
 
-AZURE_DOC_INTELLIGENCE_ENDPOINT="https://groceries-agent-foundry.cognitiveservices.azure.com/"
+AZURE_FOUNDRY_ENDPOINT="https://groceries-agent-foundry.cognitiveservices.azure.com/"
 GOOGLE_DRIVE_PATH = Path("/mnt/e/My Drive/groceries_data")
 
 if not GOOGLE_DRIVE_PATH.exists():
@@ -27,6 +27,11 @@ class ItemData(BaseModel):
     volume: float | None
     number_per_pack: int | None
     is_substitute: bool = False
+
+
+class ExtractionResult(BaseModel):
+    order: OrderData
+    items: list[ItemData]
 
 
 GROUPS = [

@@ -5,6 +5,8 @@ requires-python = ">=3.12"
 dependencies = [
     "azure-ai-documentintelligence>=1.0.2",
     "azure-core>=1.41.0",
+    "azure-identity>=1.27.0",
+    "langchain-azure-ai>=1.2.3",
     "pandas>=3.1.1",
     "pydantic>=2.14.3",
     "pytest>=9.2.0",
