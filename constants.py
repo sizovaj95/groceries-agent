@@ -20,6 +20,7 @@ class OrderData(BaseModel):
 
 class ItemData(BaseModel):
     name: str
+    brand: str | None
     price: float
     quantity: int | None
     group: str

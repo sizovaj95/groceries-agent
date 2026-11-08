@@ -6,6 +6,7 @@ from langchain.agents import create_agent
 from langchain.agents.structured_output import ToolStrategy
 from langchain.tools import tool
 from langchain_azure_ai.chat_models import AzureAIOpenAIApiChatModel
+import pandas as pd
 
 import constants as co
 from prompts.extracting_agent_prompt import prompt
@@ -60,6 +61,12 @@ def convert_to_litres(value: float, unit: str) -> float:
         raise ValueError("Unsupported unit.")
 
 
+def convert_items_list_to_pandas_df(items_list: list[co.ItemData]) -> pd.DataFrame:
+    items_dict = {field: [getattr(item, field) for item in items_list] for field in co.ItemData.model_fields}
+    df = pd.DataFrame(data=items_dict)
+    return df
+
+
 def main():
     model = AzureAIOpenAIApiChatModel(
         endpoint=OPENAI_BASE_URL,
@@ -68,27 +75,24 @@ def main():
     )
     agent = create_agent(
         model=model,
-        # tools=[calculate_value_per_item, convert_to_kilograms, convert_to_litres],
-        system_prompt="You are a helpful assistant who knows everything about dinosairs and directs every question towards dinosaurs.",
-        # response_format=co.ExtractionResult
+        tools=[calculate_value_per_item, convert_to_kilograms, convert_to_litres],
+        system_prompt=prompt,
+        response_format=ToolStrategy(
+            co.ExtractionResult,
+            handle_errors=True,
+        )
     )
 
     with open(EXAMPLE_MD, "r", encoding="utf-8") as f:
         example_markdown = f.read()
     
-    # result = agent.invoke({
-    #     "messages": [{
-    #         "role": "user",
-    #         "content": f"Extract from this receipts:\n\n{example_markdown}"
-    #     }]
-    # })
-
     result = agent.invoke({
         "messages": [{
             "role": "user",
-            "content": "What is the capital of France?"
+            "content": f"Extract from this receipts:\n\n{example_markdown}"
         }]
     })
-    result
+
+    result["structured_response"]
 
 main()
