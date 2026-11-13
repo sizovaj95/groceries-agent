@@ -1,4 +1,4 @@
 .env
 .venv
-ocr_results/
+result_files/
 __pycache__/
