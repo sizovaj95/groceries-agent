@@ -6,8 +6,8 @@ from pydantic import BaseModel
 AZURE_FOUNDRY_ENDPOINT="https://groceries-agent-foundry.cognitiveservices.azure.com/"
 GOOGLE_DRIVE_PATH = Path("/mnt/e/My Drive/groceries_data")
 
-if not GOOGLE_DRIVE_PATH.exists():
-    raise FileNotFoundError(f"Google Drive path {GOOGLE_DRIVE_PATH} does not exist. Please ensure that the Google Drive is mounted correctly.")
+# if not GOOGLE_DRIVE_PATH.exists():
+#     raise FileNotFoundError(f"Google Drive path {GOOGLE_DRIVE_PATH} does not exist. Please ensure that the Google Drive is mounted correctly.")
 
 DATE_FORMAT = "YYYY-MM-DD"
 

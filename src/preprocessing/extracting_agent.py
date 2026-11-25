@@ -71,7 +71,8 @@ def convert_items_list_to_pandas_df(items_list: list[co.ItemData]) -> pd.DataFra
     df = pd.DataFrame(data=items_dict)
     return df
 
-def main():
+
+def get_agent():
     model = AzureAIOpenAIApiChatModel(
         endpoint=OPENAI_BASE_URL,
         credential=os.environ.get("AZURE_FOUNDRY_KEY"),
@@ -86,6 +87,10 @@ def main():
             co.ExtractionResult
         )
     )
+    return agent
+
+def main():
+    agent = get_agent()
 
     for file_ in RESULTS_FOLDER.iterdir():
         if file_.suffix != ".md":
